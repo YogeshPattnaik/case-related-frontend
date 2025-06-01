@@ -1,0 +1,18 @@
+{
+  "login": {
+    "title": "Login to your account",
+    "email": "Email Address",
+    "password": "Password",
+    "otp": "Enter OTP",
+    "captcha": "Enter Captcha"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "fileCase": "File New Case",
+    "payment": "Payment History",
+    "reply": "Reply",
+    "rejoinder": "Rejoinder",
+    "filing": "Subsequent Filing",
+    "knowCase": "Know Your Case"
+  }
+}

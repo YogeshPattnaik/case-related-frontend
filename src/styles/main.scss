@@ -1,0 +1,116 @@
+@import 'variables';
+@import 'mixins';
+@import 'theme';
+@use 'sass:color';
+
+// Global styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  width: 100%;
+  font-size: $font-size-base;
+  font-family: $font-family-base;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: $font-weight-regular;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $text-color;
+  text-align: left;
+  background-color: $background-color;
+
+  @include scrollbar;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+// Selection styles
+::selection {
+  background-color: $primary-color;
+  color: $button-text-color;
+}
+
+// Focus styles
+:focus {
+  outline: 2px solid $primary-color;
+  outline-offset: 2px;
+}
+
+// Link styles
+a {
+  color: $link-color;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: darken($link-color, 10%);
+  }
+}
+
+// Image styles
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+// Form styles
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+// Button styles
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+// List styles
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Example of using a mixin (assuming you have one in mixins.scss) */
+/*
+.my-element {
+  @include mixins.my-mixin();
+}
+*/
+
+/* Fix for darken function usage */
+/* This was in your warning output, applying the fix here */
+.some-element-that-used-darken {
+   color: color.adjust(variables.$primary-color, $lightness: -10%);
+} 

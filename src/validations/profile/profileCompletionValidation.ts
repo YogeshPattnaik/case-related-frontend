@@ -1,0 +1,61 @@
+import * as yup from 'yup';
+import { ProfileCompletionViewModel } from '../../viewmodels/profile/ProfileCompletionViewModel';
+
+export const profileCompletionValidationSchema = yup.object().shape({
+  name: yup.string().required('Name is required'),
+  email: yup.string().email('Invalid email').required('Email is required'),
+  phone: yup.string().required('Phone is required'),
+  addressLine1: yup.string().required('Address Line 1 is required'),
+  addressLine2: yup.string(),
+  city: yup.string().required('City is required'),
+  state: yup.string().required('State is required'),
+  country: yup.string().required('Country is required'),
+  postalCode: yup.string().required('Postal Code is required'),
+  idTypeId: yup.string().required('ID Type is required'),
+  idNumber: yup.string().required('ID Number is required'),
+  idExpiryDate: yup.string().required('ID Expiry Date is required'),
+  idIssuingCountry: yup.string().required('ID Issuing Country is required'),
+});
+
+export const initialProfileCompletionValues: ProfileCompletionViewModel = {
+  roleId: '',
+  name: '',
+  email: '',
+  phone: '',
+  addressLine1: '',
+  addressLine2: '',
+  city: '',
+  state: '',
+  country: '',
+  postalCode: '',
+  idTypeId: '',
+  idNumber: '',
+  idExpiryDate: '',
+  idIssuingCountry: '',
+  isNRI: false,
+  isProfileComplete: false,
+  isAddressComplete: false,
+  isIdentificationComplete: false,
+  toJSON() {
+    return {
+      roleId: this.roleId,
+      name: this.name,
+      email: this.email,
+      phone: this.phone,
+      addressLine1: this.addressLine1,
+      addressLine2: this.addressLine2,
+      city: this.city,
+      state: this.state,
+      country: this.country,
+      postalCode: this.postalCode,
+      idTypeId: this.idTypeId,
+      idNumber: this.idNumber,
+      idExpiryDate: this.idExpiryDate,
+      idIssuingCountry: this.idIssuingCountry,
+      isNRI: this.isNRI,
+      isProfileComplete: this.isProfileComplete,
+      isAddressComplete: this.isAddressComplete,
+      isIdentificationComplete: this.isIdentificationComplete,
+    };
+  },
+}; 

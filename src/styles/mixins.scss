@@ -1,0 +1,115 @@
+@use './variables.scss';
+@use 'sass:color';
+
+// Flexbox
+@mixin flex($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: $wrap;
+}
+
+// Grid
+@mixin grid($columns: 1, $gap: 0) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+}
+
+// Responsive
+@mixin responsive($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: ($breakpoint-sm - 1)) { @content; }
+  } @else if $breakpoint == sm {
+    @media (min-width: $breakpoint-sm) and (max-width: ($breakpoint-md - 1)) { @content; }
+  } @else if $breakpoint == md {
+    @media (min-width: $breakpoint-md) and (max-width: ($breakpoint-lg - 1)) { @content; }
+  } @else if $breakpoint == lg {
+    @media (min-width: $breakpoint-lg) and (max-width: ($breakpoint-xl - 1)) { @content; }
+  } @else if $breakpoint == xl {
+    @media (min-width: $breakpoint-xl) { @content; }
+  }
+}
+
+// Typography
+@mixin typography($size: $font-size-base, $weight: $font-weight-regular, $line-height: 1.5) {
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $line-height;
+}
+
+// Transitions
+@mixin transition($property: all, $duration: $transition-duration, $timing: $transition-timing) {
+  transition: $property $duration $timing;
+}
+
+// Shadows
+@mixin shadow($level: 'md') {
+  @if $level == 'sm' {
+    box-shadow: $shadow-sm;
+  } @else if $level == 'md' {
+    box-shadow: $shadow-md;
+  } @else if $level == 'lg' {
+    box-shadow: $shadow-lg;
+  }
+}
+
+// Truncate text
+@mixin truncate($lines: 1) {
+  @if $lines == 1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+// Scrollbar styling
+@mixin scrollbar {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $scrollbar-track-color;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $scrollbar-thumb-color;
+    border-radius: 4px;
+
+    &:hover {
+      background: darken($scrollbar-thumb-color, 10%);
+    }
+  }
+}
+
+@mixin transition {
+  transition: all 0.3s ease-in-out;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin button-styles($bg-color: variables.$primary-color, $text-color: variables.$button-text-color) {
+  background-color: $bg-color;
+  color: $text-color;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  @include transition;
+
+  &:hover {
+    background-color: color.adjust($bg-color, $lightness: -10%);
+  }
+} 

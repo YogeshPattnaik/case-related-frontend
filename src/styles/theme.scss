@@ -1,0 +1,118 @@
+@import 'variables';
+@import 'mixins';
+
+// Global styles
+:root {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: 1.5;
+  font-weight: $font-weight-regular;
+}
+
+// Layout
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+// Container
+.container {
+  width: 100%;
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+
+  @include respond-to(sm) {
+    padding: 0 $spacing-lg;
+  }
+}
+
+// Common components
+.card {
+  background: white;
+  border-radius: $border-radius-md;
+  @include shadow('md');
+  padding: $spacing-lg;
+}
+
+// Button
+.button {
+  @include transition;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius;
+  cursor: pointer;
+  border: none;
+  @include mixins.transition;
+  border-radius: variables.$border-radius-sm;
+  padding: variables.$spacing-sm variables.$spacing-md;
+  font-weight: variables.$font-weight-medium;
+  cursor: pointer;
+
+  &:hover {
+    @include mixins.shadow('sm');
+  }
+}
+
+// Form elements
+.input {
+  border: 1px solid variables.$border-color;
+  border-radius: variables.$border-radius-sm;
+  padding: variables.$spacing-sm;
+  @include mixins.transition;
+
+  &:focus {
+    border-color: variables.$primary-color;
+    outline: none;
+  }
+}
+
+// Utility classes
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-left { text-align: left; }
+
+.mt-1 { margin-top: variables.$spacing-xs; }
+.mt-2 { margin-top: variables.$spacing-sm; }
+.mt-3 { margin-top: variables.$spacing-md; }
+.mt-4 { margin-top: variables.$spacing-lg; }
+.mt-5 { margin-top: variables.$spacing-xl; }
+
+.mb-1 { margin-bottom: variables.$spacing-xs; }
+.mb-2 { margin-bottom: variables.$spacing-sm; }
+.mb-3 { margin-bottom: variables.$spacing-md; }
+.mb-4 { margin-bottom: variables.$spacing-lg; }
+.mb-5 { margin-bottom: variables.$spacing-xl; }
+
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn variables.$transition-duration variables.$transition-timing;
+}
+
+.slide-in {
+  animation: slideIn variables.$transition-duration variables.$transition-timing;
+}
+
+/* Theme styles */
+
+/* Example: Styling a specific component using variables */
+.MuiButton-containedPrimary {
+  background-color: variables.$primary-color !important;
+  color: variables.$button-text-color !important;
+
+  &:hover {
+    background-color: color.adjust(variables.$primary-color, $lightness: -10%) !important;
+  }
+}
+
+/* Add more theme-specific styles here */ 
