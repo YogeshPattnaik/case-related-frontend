@@ -2,7 +2,7 @@ import { Outlet, Navigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { ROUTES } from '../routes';
 import Header from '../components/layout/Header';
-import Sidebar from '../components/layout/Sidebar';
+import Sidebar from '../components/layout/Sidebar/index';
 import { Box } from '@mui/material';
 
 function ProtectedLayout() {

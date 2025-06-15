@@ -11,6 +11,7 @@ import Settings from './pages/settings/Settings';
 import ProfileCompletion from './pages/profile/ProfileCompletion';
 import PublicLayout from './layouts/PublicLayout';
 import ProtectedLayout from './layouts/ProtectedLayout';
+import LandingPage from './pages/landing/LandingPage';
 
 function App() {
   const { user } = useAuth();
@@ -18,6 +19,7 @@ function App() {
   return (
     <Routes>
       <Route element={<PublicLayout />}>
+        <Route path="/" element={<LandingPage />} />
         <Route path={ROUTES.LOGIN} element={<Login />} />
         <Route path={ROUTES.REGISTER} element={<Register />} />
         <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
@@ -31,7 +33,7 @@ function App() {
         <Route path={ROUTES.PROFILE_COMPLETION} element={<ProfileCompletion />} />
       </Route>
 
-      <Route path="*" element={<Navigate to={user ? ROUTES.DASHBOARD : ROUTES.LOGIN} replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

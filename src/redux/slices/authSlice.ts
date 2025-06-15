@@ -1,10 +1,11 @@
+import { RoleId } from '@/types/menu';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface User {
   id: string;
   name: string;
   email: string;
-  role: string;
+  roleId: RoleId;
 }
 
 interface AuthState {

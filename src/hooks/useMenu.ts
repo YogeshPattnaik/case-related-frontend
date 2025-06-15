@@ -2,6 +2,11 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import type { RoleId } from '../types/menu';
 import { menuService } from '../services/menuService';
 
+interface MenuResponse {
+  menuItems: any[];
+  lastUpdated: string;
+}
+
 export const useMenu = (roleId: RoleId) => {
   const queryClient = useQueryClient();
 
@@ -10,11 +15,11 @@ export const useMenu = (roleId: RoleId) => {
     isLoading,
     error,
     refetch,
-  } = useQuery({
+  } = useQuery<MenuResponse>({
     queryKey: ['menu', roleId],
     queryFn: () => menuService.getMenuByRole(roleId),
     staleTime: 5 * 60 * 1000, // 5 minutes
-    cacheTime: 30 * 60 * 1000, // 30 minutes
+    gcTime: 30 * 60 * 1000, // 30 minutes
   });
 
   const refreshMenu = async () => {

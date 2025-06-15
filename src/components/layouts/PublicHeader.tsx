@@ -8,6 +8,7 @@ import {
   Container,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/routes';
 
 const PublicHeader: React.FC = () => {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ const PublicHeader: React.FC = () => {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => navigate('/auth/login')}
+              onClick={() => navigate(ROUTES.LOGIN)}
             >
               Login / Sign Up
             </Button>
