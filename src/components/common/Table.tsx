@@ -1,4 +1,3 @@
-/* File: src/components/common/Table.tsx */
 import React from 'react';
 import {
   Table as MuiTable,
@@ -9,22 +8,33 @@ import {
   TableRow,
   TablePagination,
   Paper,
+  Box,
+  Typography,
   type TableProps as MuiTableProps,
+  IconButton
 } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+export interface TableColumn {
+  id: string;
+  label: string;
+  minWidth?: number;
+  align?: 'left' | 'right' | 'center';
+  isAction?: boolean;
+}
 
 export interface TableProps extends MuiTableProps {
-  columns: {
-    id: string;
-    label: string;
-    minWidth?: number;
-    align?: 'left' | 'right' | 'center';
-  }[];
+  columns: TableColumn[];
   data: Record<string, any>[];
   page: number;
   rowsPerPage: number;
   totalCount: number;
   onPageChange: (newPage: number) => void;
   onRowsPerPageChange: (newRowsPerPage: number) => void;
+  onEdit?: (row: Record<string, any>) => void;
+  onDelete?: (row: Record<string, any>) => void;
+  showIndex?: boolean;
 }
 
 const Table: React.FC<TableProps> = ({
@@ -35,10 +45,15 @@ const Table: React.FC<TableProps> = ({
   totalCount,
   onPageChange,
   onRowsPerPageChange,
+  onEdit,
+  onDelete,
+  showIndex = true,
   ...props
 }) => {
-  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-    console.log('event', event);
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
     onPageChange(newPage);
   };
 
@@ -51,6 +66,7 @@ const Table: React.FC<TableProps> = ({
       <MuiTable {...props}>
         <TableHead>
           <TableRow>
+            {showIndex && <TableCell>#</TableCell>}
             {columns.map((column) => (
               <TableCell
                 key={column.id}
@@ -60,18 +76,48 @@ const Table: React.FC<TableProps> = ({
                 {column.label}
               </TableCell>
             ))}
+            {(onEdit || onDelete) && <TableCell align="center">Actions</TableCell>}
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row, index) => (
-            <TableRow key={index}>
-              {columns.map((column) => (
-                <TableCell key={column.id} align={column.align}>
-                  {row[column.id]}
-                </TableCell>
-              ))}
+          {data.length > 0 ? (
+            data.map((row, index) => (
+              <TableRow key={index}>
+                {showIndex && (
+                  <TableCell>{page * rowsPerPage + index + 1}</TableCell>
+                )}
+                {columns.map((column) => (
+                  <TableCell key={column.id} align={column.align}>
+                    {row[column.id]}
+                  </TableCell>
+                ))}
+                {(onEdit || onDelete) && (
+                  <TableCell align="center">
+                    {onEdit && (
+                      <IconButton onClick={() => onEdit(row)} color="primary">
+                        <EditIcon />
+                      </IconButton>
+                    )}
+                    {onDelete && (
+                      <IconButton onClick={() => onDelete(row)} color="error">
+                        <DeleteIcon />
+                      </IconButton>
+                    )}
+                  </TableCell>
+                )}
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length + 2}>
+                <Box p={2} textAlign="center">
+                  <Typography variant="body2" color="textSecondary">
+                    No records found
+                  </Typography>
+                </Box>
+              </TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </MuiTable>
       <TablePagination
@@ -87,4 +133,4 @@ const Table: React.FC<TableProps> = ({
   );
 };
 
-export default Table; 
+export default Table;

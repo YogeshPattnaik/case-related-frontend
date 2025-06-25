@@ -1,26 +1,47 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { RootState } from '../redux/store';
-import { logout } from '../redux/slices/authSlice';
+import { RootState, AppDispatch } from '../redux/store';
+import { login, logout, clearError } from '../redux/slices/authSlice';
 import { ROUTES } from '../routes';
+import { LoginViewModel } from '@/viewmodels/auth/LoginViewModel';
 
-export function useAuth() {
-  const dispatch = useDispatch();
+export const useAuth = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const user = useSelector((state: RootState) => state.auth.user);
+  const { user, token, isAuthenticated, isLoading, error } = useSelector(
+    (state: RootState) => state.auth
+  );
 
-  const logoutMutation = useMutation({
-    mutationFn: async () => {
-      queryClient.clear();
-      dispatch(logout());
+  const handleLogin = async (credentials:LoginViewModel) => {
+    try {
+      await dispatch(login(credentials)).unwrap();
+      navigate(ROUTES.DASHBOARD);
+    } catch (error) {
+      // Error is handled by Redux
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await dispatch(logout()).unwrap();
       navigate(ROUTES.LOGIN);
-    },
-  });
+    } catch (error) {
+      // Error is handled by Redux
+    }
+  };
+
+  const handleClearError = () => {
+    dispatch(clearError());
+  };
 
   return {
     user,
-    logout: logoutMutation.mutate,
+    token,
+    isAuthenticated,
+    isLoading,
+    error,
+    login: handleLogin,
+    logout: handleLogout,
+    clearError: handleClearError,
   };
-} 
+}; 

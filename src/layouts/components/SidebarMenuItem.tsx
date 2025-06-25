@@ -7,11 +7,13 @@ import {
   Box,
 } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
-import type { MenuItem as MenuItemType } from '../../../types/menu';
-import SubMenu from './SubMenu';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import type { SidebarMenuItem } from '../../services/sidebarService';
+import SidebarSubMenu from './SidebarSubMenu';
+import DynamicIcon from './DynamicIcon';
 
 interface MenuItemProps {
-  item: MenuItemType;
+  item: SidebarMenuItem;
   level?: number;
 }
 
@@ -26,7 +28,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, level = 0 }) => {
   const handleClick = () => {
     if (hasChildren) {
       setOpen(!open);
-    } else {
+    } else if (item.path) {
       navigate(item.path);
     }
   };
@@ -48,19 +50,21 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, level = 0 }) => {
       >
         {item.icon && (
           <ListItemIcon>
-            <span className="material-icons">{item.icon}</span>
+            <DynamicIcon iconName={item.icon} />
           </ListItemIcon>
         )}
         <ListItemText primary={item.label} />
-        {hasChildren && (
-          <span className="material-icons">
-            {open ? 'expand_less' : 'expand_more'}
-          </span>
-        )}
+        {hasChildren ? (
+          open ? (
+            <ExpandLess />
+          ) : (
+            <ExpandMore />
+          )
+        ) : null}
       </ListItemButton>
       {hasChildren && (
         <Collapse in={open} timeout="auto" unmountOnExit>
-          <SubMenu items={item.children} level={level + 1} />
+          <SidebarSubMenu items={item.children} level={level + 1} />
         </Collapse>
       )}
     </Box>

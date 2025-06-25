@@ -15,6 +15,9 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { ROUTES } from '../../routes';
 import { useAuth } from '../../hooks/useAuth';
+import { useSelector } from 'react-redux';
+import { flattenMenu } from '../../utils/flattenMenu';
+import { RootState } from '../../redux/store';
 
 const validationSchema = yup.object({
   name: yup.string().required('Name is required'),
@@ -36,6 +39,7 @@ function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuth();
+  const menuItems = useSelector((state: RootState) => state.sidebar.menuItems);
 
   const formik = useFormik({
     initialValues: {
@@ -47,12 +51,17 @@ function Register() {
     validationSchema,
     onSubmit: (values) => {
       console.log(values);
-      navigate(ROUTES.LOGIN);
+      handleRegisterSuccess();
     },
   });
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleRegisterSuccess = () => {
+    const dashboardPath = flattenMenu(menuItems).find(path => path.includes('dashboard')) || '/';
+    navigate(dashboardPath, { replace: true });
   };
 
   if (user) {

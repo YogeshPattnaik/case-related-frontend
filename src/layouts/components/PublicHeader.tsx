@@ -8,7 +8,7 @@ import {
   Container,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/routes';
+import { ROUTES } from '../../routes';
 
 const PublicHeader: React.FC = () => {
   const navigate = useNavigate();

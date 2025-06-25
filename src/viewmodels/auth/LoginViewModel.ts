@@ -1,19 +1,37 @@
 export class LoginViewModel {
-  email: string = '';
+  /**
+   * The user's email address (used for API submission).
+   */
+  emailOrMobile: string = '';
+  /**
+   * The user's password.
+   */
   password: string = '';
-  otp: string = '';
 
   constructor(data: Partial<LoginViewModel> = {}) {
-    this.email = data.email || '';
+    this.emailOrMobile = data.emailOrMobile || '';
     this.password = data.password || '';
-    this.otp = data.otp || '';
   }
 
+  /**
+   * Returns the object shape expected by the API for login submission.
+   * Use this when sending data to the backend.
+   */
   toJSON() {
     return {
-      email: this.email,
+      emailOrMobile: this.emailOrMobile,
       password: this.password,
-      otp: this.otp,
+    };
+  }
+
+  /**
+   * Returns the object shape expected by the Formik login form.
+   * Use this for Formik's initialValues.
+   */
+  static formInitialValues() {
+    return {
+      emailOrMobile: '',
+      password: '',
     };
   }
 } 

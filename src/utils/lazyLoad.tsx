@@ -1,10 +1,10 @@
 import React from 'react';
 import { CircularProgress, Box } from '@mui/material';
 
-export const lazyLoad = (importFunc: () => Promise<any>) => {
+export function lazyLoad(importFunc: () => Promise<{ default: React.ComponentType<any> }>): () => JSX.Element {
   const LazyComponent = React.lazy(importFunc);
 
-  return function LazyLoadWrapper(props: any) {
+  return function LazyLoadWrapper() {
     return (
       <React.Suspense
         fallback={
@@ -18,8 +18,8 @@ export const lazyLoad = (importFunc: () => Promise<any>) => {
           </Box>
         }
       >
-        <LazyComponent {...props} />
+        <LazyComponent />
       </React.Suspense>
     );
   };
-}; 
+} 
