@@ -2,8 +2,8 @@ import React from 'react';
 import { Switch, FormControlLabel, CircularProgress } from '@mui/material';
 
 interface ToggleSwitchProps {
-  checked?: boolean; // Controlled mode
-  defaultChecked?: boolean; // Uncontrolled mode
+  checked?: boolean;
+  defaultChecked?: boolean;
   onChange?: (checked: boolean) => void;
   loading?: boolean;
   label?: string;
