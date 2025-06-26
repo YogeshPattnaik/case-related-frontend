@@ -23,12 +23,22 @@ const MainLayout: React.FC = () => {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
           mt: 8,
-          ml: { sm: `${240}px` },
+          px: { xs: 2, sm: 3 },
+          width: '100%',
+          boxSizing: 'border-box',
+          display: 'flex',
+          justifyContent: 'center',
         }}
       >
-        <Outlet />
+        <Box
+          sx={{
+            maxWidth: '1200px',
+            width: '100%',
+          }}
+        >
+          <Outlet />
+        </Box>
       </Box>
     </Box>
   );

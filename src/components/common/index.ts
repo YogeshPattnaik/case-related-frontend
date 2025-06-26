@@ -11,4 +11,5 @@ export { default as CaptchaBox } from './CaptchaBox';
 export { default as Chips } from './Chips';
 export { default as DropDown } from './DropDown';
 export { default as AutoCompleteDropdown } from './AutoCompleteDropdown';
-export { default as Accordion } from './Accordion'; 
+export { default as Accordion } from './Accordion';
+export { default as ToggleSwitch } from './ToggleSwitch'; 

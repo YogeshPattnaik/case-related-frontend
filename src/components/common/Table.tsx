@@ -15,6 +15,8 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 export interface TableColumn {
   id: string;
@@ -22,6 +24,8 @@ export interface TableColumn {
   minWidth?: number;
   align?: 'left' | 'right' | 'center';
   isAction?: boolean;
+  sortable?: boolean;
+  render?: (row: Record<string, any>, rowIndex: number) => React.ReactNode;
 }
 
 export interface TableProps extends MuiTableProps {
@@ -35,6 +39,9 @@ export interface TableProps extends MuiTableProps {
   onEdit?: (row: Record<string, any>) => void;
   onDelete?: (row: Record<string, any>) => void;
   showIndex?: boolean;
+  onSort?: (columnId: string) => void;
+  sortBy?: string;
+  sortDirection?: 'asc' | 'desc';
 }
 
 const Table: React.FC<TableProps> = ({
@@ -48,6 +55,9 @@ const Table: React.FC<TableProps> = ({
   onEdit,
   onDelete,
   showIndex = true,
+  onSort,
+  sortBy,
+  sortDirection,
   ...props
 }) => {
   const handleChangePage = (
@@ -61,6 +71,12 @@ const Table: React.FC<TableProps> = ({
     onRowsPerPageChange(parseInt(event.target.value, 10));
   };
 
+  const handleSort = (column: TableColumn) => {
+    if (onSort && column.sortable) {
+      onSort(column.id);
+    }
+  };
+
   return (
     <TableContainer component={Paper}>
       <MuiTable {...props}>
@@ -71,9 +87,13 @@ const Table: React.FC<TableProps> = ({
               <TableCell
                 key={column.id}
                 align={column.align}
-                style={{ minWidth: column.minWidth }}
+                onClick={() => handleSort(column)}
+                sx={{ minWidth: column.minWidth, ...(column.sortable ? { cursor: 'pointer', userSelect: 'none' } : {}) }}
               >
                 {column.label}
+                {column.sortable && sortBy === column.id && (
+                  sortDirection === 'asc' ? <ArrowDropUpIcon fontSize="small" /> : <ArrowDropDownIcon fontSize="small" />
+                )}
               </TableCell>
             ))}
             {(onEdit || onDelete) && <TableCell align="center">Actions</TableCell>}
@@ -88,7 +108,7 @@ const Table: React.FC<TableProps> = ({
                 )}
                 {columns.map((column) => (
                   <TableCell key={column.id} align={column.align}>
-                    {row[column.id]}
+                    {column.render ? column.render(row, index) : row[column.id]}
                   </TableCell>
                 ))}
                 {(onEdit || onDelete) && (

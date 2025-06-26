@@ -4,7 +4,6 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {
   Box,
-  Button,
   TextField,
   Link,
   Typography,
@@ -18,6 +17,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { useSelector } from 'react-redux';
 import { flattenMenu } from '../../utils/flattenMenu';
 import { RootState } from '../../redux/store';
+import { Button } from '../../components/common';
 
 const validationSchema = yup.object({
   name: yup.string().required('Name is required'),

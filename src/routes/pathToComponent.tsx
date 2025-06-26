@@ -1,9 +1,9 @@
 import { lazyLoad } from '../utils/lazyLoad';
 
 const pathToComponent: Record<string, () => JSX.Element> = {
-  '/super-admin/dashboard': lazyLoad(() => import('../pages/dashboard/Dashboard')),
   '/profile': lazyLoad(() => import('../pages/profile/Profile')),
-  // Add more mappings as needed
+  '/super-admin/dashboard': lazyLoad(() => import('../pages/dashboard/Dashboard')),
+  '/masters/countries': lazyLoad(() => import('../pages/masters/country/CountryList'))
 };
 
 export default pathToComponent; 

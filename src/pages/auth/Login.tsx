@@ -4,7 +4,6 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
   Alert,
   Box,
-  Button,
   IconButton,
   InputAdornment,
   Link,
@@ -17,6 +16,7 @@ import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { ROUTES } from '../../routes';
+import { Button } from '../../components/common';
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);

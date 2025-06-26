@@ -100,13 +100,12 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
 
   return (
     <Drawer
-      variant={isMobile ? 'temporary' : 'permanent'}
-      open={isMobile ? open : true}
-      onClose={isMobile ? onClose : undefined}
+      variant={isMobile ? 'temporary' : 'persistent'}
+      open={open}
+      onClose={onClose}
       sx={{
         width: DRAWER_WIDTH,
         flexShrink: 0,
-        display: isMobile ? { xs: 'block', sm: 'none' } : { xs: 'none', sm: 'block' },
         '& .MuiDrawer-paper': {
           width: DRAWER_WIDTH,
           boxSizing: 'border-box',

@@ -1,8 +1,12 @@
+import { ICountryMasterResponse } from '@/types/masters/mastersResponse';
 import axios from '../../config/axios';
 
 export class MasterService {
-  static getCountries() {
-    return axios.get('/api/v1/masters/countries');
+  static async getCountries(): Promise<ICountryMasterResponse[]> {
+    const res = await axios.get<{ success: boolean; data: ICountryMasterResponse[] }>(
+      '/api/v1/masters/countries'
+    );
+    return res.data.data;
   }
 
   static createCountry(data: { name: string; isoCode: string }) {
@@ -33,5 +37,4 @@ export class MasterService {
   static deleteState(id: string) {
     return axios.delete(`/api/v1/masters/states/${id}`);
   }
-
 }
